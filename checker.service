@@ -1,0 +1,13 @@
+[Unit]
+Description=Checker
+After=network.target
+
+[Service]
+Type=simple
+User=akaiser
+WorkingDirectory=/home/nanodano
+ExecStart=/home/nanodano/my_daemon
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
