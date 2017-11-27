@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=akaiser
-WorkingDirectory=/home/nanodano
-ExecStart=/home/nanodano/my_daemon
+WorkingDirectory=/home/akaiser
+ExecStart=python /home/akaiser/dev/checker/checker.py
 Restart=on-failure
 
 [Install]
