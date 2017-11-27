@@ -3,11 +3,9 @@ Description=Checker
 After=network.target
 
 [Service]
-Type=simple
 User=akaiser
-WorkingDirectory=/home/akaiser
-ExecStart=python /home/akaiser/dev/checker/checker.py
-Restart=on-failure
+ExecStart=/bin/bash -c 'cd /home/akaiser/dev/checker; source ~/.virtualenvs/checker/bin/activate; python web.py'
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
