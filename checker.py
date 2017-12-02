@@ -2,6 +2,7 @@ import time
 
 from checkers import RandomChecker
 from checkers import TooManyProcessesChecker
+from checkers import UpdateStateMemoryChecker
 
 OUTPUT_DIR = "/home/akaiser/checker"
 SEND_ADDRESS = "alextkaiser@gmail.com"
