@@ -45,6 +45,8 @@ class TooManyProcessesChecker(CheckerClass):
     '''
     Checker that checks if there are too many Xvfb processes
     '''
+    # This should fail if there are greater than 5 Xvfb processes (6 is
+    # because there is one for the grep process)
     MAX_NUMBER_OF_PROCS = 6
 
     def run_check(self):
