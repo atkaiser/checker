@@ -4,6 +4,7 @@ from checkers import RandomChecker
 from checkers import TooManyProcessesChecker
 
 OUTPUT_DIR = "/home/akaiser/checker"
+SEND_ADDRESS = "alextkaiser@gmail.com"
 
 GMAIL_USR = ""
 GMAIL_PWD = ""
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 
     checks = []
     checks.append([TooManyProcessesChecker(), False])
+    checks.append([UpdateStateMemoryChecker(), False])
 
     while True:
         print("Starting check loop")
@@ -52,13 +54,13 @@ if __name__ == "__main__":
             if not check_output[0]:
                 print("Check failed: {}".format(check_output[1]))
                 if not check_tuple[1]:
-                    send_email("alextkaiser@gmail.com",
+                    send_email(SEND_ADDRESS,
                                "{} check failed".format(name),
                                check_output[1])
                     check_tuple[1] = True
             else:
                 if check_tuple[1]:
-                    send_email("alextkaiser@gmail.com",
+                    send_email(SEND_ADDRESS,
                                "{} check recovered".format(name),
                                "{} is back to normal.".format(name))
                     check_tuple[1] = False

@@ -64,10 +64,36 @@ class TooManyProcessesChecker(CheckerClass):
         return "TooManyProcessesChecker check"
 
 
+class UpdateStateMemoryChecker(CheckerClass):
+    '''
+    Checks if the update_state process is taking up too much memory.
+    '''
+    MAX_MEMORY_PERCENT = 75
+
+    def run_check(self):
+        memory_percent = subprocess.check_output(
+            ("ps aux | "
+             "grep update_state | "
+             "grep -v grep | "
+             "grep Sl | "
+             "tr -s \" \" | "
+             "cut -f4 -d\" \""),
+            shell=True)
+        memory_percent = float(memory_percent.strip())
+        if (memory_percent > UpdateStateMemoryChecker.MAX_MEMORY_PERCENT):
+            return (False, "Memory currently at: {}".format(memory_percent))
+        else:
+            return (True, "")
+
+    def get_name(self):
+        return "Update state memory check"
+
+
 if __name__ == "__main__":
     # Run a check once
     possible_checkers = {'random': RandomChecker(),
-                         'too_many_procs': TooManyProcessesChecker()}
+                         'too_many_procs': TooManyProcessesChecker(),
+                         'memory': UpdateStateMemoryChecker()}
     parser = argparse.ArgumentParser(description='Run a single check.')
     parser.add_argument('--checker_name', choices=possible_checkers.keys())
     args = parser.parse_args()
