@@ -1,6 +1,7 @@
 import time
 
 from checkers import RandomChecker
+from checkers import TooManyProcessesChecker
 
 OUTPUT_DIR = "/home/akaiser/checker"
 
@@ -32,14 +33,15 @@ def send_email(recipient, subject, body):
         server.sendmail(FROM, TO, message)
         server.close()
         print("successfully sent the mail")
-    except:
+    except e:
+        print(e)
         print("Failed to send mail.")
 
 
 if __name__ == "__main__":
 
     checks = []
-    checks.append([RandomChecker(), False])
+    checks.append([TooManyProcessesChecker(), False])
 
     while True:
         print("Starting check loop")
