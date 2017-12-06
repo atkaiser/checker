@@ -51,7 +51,12 @@ if __name__ == "__main__":
         for check_tuple in checks:
             check = check_tuple[0]
             name = check.get_name()
-            check_output = check.run_check()
+            try:
+                check_output = check.run_check()
+            except Exception as e:
+                # If a check fails print to the logs, but keep going
+                traceback.print_exc()
+                continue
             if not check_output[0]:
                 print("Check failed: {}".format(check_output[1]))
                 if not check_tuple[1]:
