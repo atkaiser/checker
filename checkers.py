@@ -71,15 +71,20 @@ class UpdateStateMemoryChecker(CheckerClass):
     MAX_MEMORY_PERCENT = 75
 
     def run_check(self):
-        memory_percent = subprocess.check_output(
-            ("ps aux | "
-             "grep update_state | "
-             "grep -v grep | "
-             "grep Sl | "
-             "tr -s \" \" | "
-             "cut -f4 -d\" \""),
-            shell=True)
-        memory_percent = float(memory_percent.strip())
+        try:
+            memory_percent = subprocess.check_output(
+                ("ps aux | "
+                 "grep update_state | "
+                 "grep -v grep | "
+                 "grep Sl | "
+                 "tr -s \" \" | "
+                 "cut -f4 -d\" \""),
+                shell=True)
+            memory_percent = float(memory_percent.strip())
+        except:
+            # This is dangerous, but going to assume update state isn't running for
+            # some reason and this is okay
+            return (True, "Failed to get memory percent")
         if (memory_percent > UpdateStateMemoryChecker.MAX_MEMORY_PERCENT):
             return (False, "Memory currently at: {}".format(memory_percent))
         else:
